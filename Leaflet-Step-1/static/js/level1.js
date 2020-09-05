@@ -4,7 +4,7 @@
   // Create a new map
   const myMap = L.map("map", {
     center:  [37.0902, -95.7129],
-    zoom: 5
+    zoom: 3
   });
 
   
@@ -29,24 +29,22 @@ const darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/
 const geoData = "static/data/earthquake_test.geojson";
 
 function markerSize(magnitude) {
-  return magnitude * 10;
+  return magnitude * 5;
+  
 }
 
 // function to return the color based on magnitude
 function markerColor(magnitude) {
 if (magnitude > 4) {
-  return 'red'
+  return '#FF6962'
 } else if (magnitude > 3) {
-  return 'orange'
+  return '#FF8776'
 } else if (magnitude > 2) {
-  return 'yellow'
+  return '#FFB092'
 } else {
-  return 'green'
+  return '#FFFFFF'
 }
 
-var mapScale = chroma.scale(['#FFEDA0', '#800026'])
-      .classes([0,1,2,3,4,5]);
-    return mapScale(magnitude)
 }
 
 // function for opacity based on magnitude
@@ -68,27 +66,33 @@ if (magnitude > 6) {
 }
 }
 
+
+function pointToLayer(feature, location) {
+  var options = {
+    stroke: false,
+    // fillOpacity: markerOpacity(feature.properties.mag),
+    // color: markerColor(feature.properties.sig),
+    color: "#000",
+    fillColor: markerColor(feature.properties.mag),
+    radius: markerSize(feature.properties.mag),
+    fillOpacity: 0.8,
+    weight: 1,
+    opacity: 0
+  }
+
+  return L.circleMarker(location, options);
+
+}
+   
+   
+  function addPopup(feature, layer) {
+  
+  // Give each feature a popup describing the place and time of the earthquake
+  return layer.bindPopup(`<h3> ${feature.properties.place} </h3> <hr> <h4>Magnitude: ${feature.properties.mag} </h4> <p> ${Date(feature.properties.time)} </p>`);
+}
+
 d3.json(geoData, function(data) {
       
-  function pointToLayer(feature, location) {
-    var options = {
-      stroke: false,
-      fillOpacity: markerOpacity(feature.properties.mag),
-      color: markerColor(feature.properties.sig),
-      fillColor: markerColor(feature.properties.mag),
-      radius: markerSize(feature.properties.mag)
-    }
-  
-    return L.circleMarker(location, options);
-  
-  }
-     
-     
-    function addPopup(feature, layer) {
-    console.log("Inside Add POP up");
-    // Give each feature a popup describing the place and time of the earthquake
-    return layer.bindPopup(`<h3> ${feature.properties.place} </h3> <hr> <h4>Magnitude: ${feature.properties.mag} </h4> <p> ${Date(feature.properties.time)} </p>`);
-}
  // console.log(jsonData.features);
   // Using the features array sent back in the API data, create a GeoJSON layer and add it to the map
   
@@ -100,13 +104,33 @@ d3.json(geoData, function(data) {
         onEachFeature:  addPopup
         }).addTo(myMap);
   
-        
+        createLegend();
   
   
 });
 
  
+function createLegend(){
 
+      // creating the legend
+      var legend = L.control({position: 'bottomright'});
 
-
-  
+      // add legend to map
+      legend.onAdd = function(myMap) {
+        var div = L.DomUtil.create("div", "info legend");
+        var magRange = [5,4,3,2];
+        var labels = ['<strong> Earthquake Magnitude </strong>'];
+     
+        // Loop through the intervals and generate a label 
+        // with a colored circle for each interval
+        for (var i = 0; i < magRange.length; i++) {
+         labels.push(
+          '<i class="circle" style="background:' + markerColor(magRange[i]) + '"></i> ' + '>' + magRange[i+1]);
+          // magRange[i] + (magRange[i+1] ? '&ndash;' +'>' + magRange[i+1] : '+'));
+          }  //ends for loop
+          div.innerHTML = labels.join('<br>');
+          return div;
+        }
+      
+      legend.addTo(myMap);
+}
