@@ -64,24 +64,6 @@ function markerColor(Significance) {
     }
 }
 
-// function for opacity based on magnitude
-function markerOpacity(magnitude) {
-if (magnitude > 6) {
-  return .99
-} else if (magnitude > 5) {
-  return .80
-} else if (magnitude > 4) {
-  return .70
-} else if (magnitude > 3) {
-  return .60
-} else if (magnitude > 2) {
-  return .50
-} else if (magnitude > 1) {
-  return .40
-} else {
-  return .30
-}
-}
 
 
 function pointToLayer(feature, location) {
