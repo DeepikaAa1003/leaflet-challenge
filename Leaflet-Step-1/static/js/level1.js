@@ -10,7 +10,7 @@ function createMaps(earthquakeMarkers){
           zoom: 5        
         });
 
-        
+      // Create street layer to map
       L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
           attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
           tileSize: 512,
@@ -19,6 +19,8 @@ function createMaps(earthquakeMarkers){
           id: "mapbox/streets-v11",
           accessToken: API_KEY
         }).addTo(myMap);
+
+      // create dark map layer
       const darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
         maxZoom: 18,
@@ -28,7 +30,7 @@ function createMaps(earthquakeMarkers){
       
       //Add markers to map
       earthquakeMarkers.addTo(myMap);
-      //Add legend to map
+      // Call the legend function
       createLegend(myMap);
 
 
@@ -36,9 +38,9 @@ function createMaps(earthquakeMarkers){
 // Store our API endpoint as queryUrl
  const geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson";
 
-//const geoData = "static/data/earthquake_test.geojson";
 
-function markerSize(magnitude) {
+//Function to calculate marker size based on magnitude
+function EarthquakemarkerSize(magnitude) {
 
   if(magnitude > 5.5) {
     return magnitude * 11;
@@ -57,7 +59,7 @@ function markerSize(magnitude) {
 }
 
 // function to return the color based on magnitude
-function markerColor(Significance) {
+function EarthquakemarkerColor(Significance) {
     if (Significance >= 1000){
       return "#E24125"
     }
@@ -76,13 +78,13 @@ function markerColor(Significance) {
 }
 
 
-
+// Function to create the marker
 function pointToLayer(feature, location) {
   var options = {
     stroke: false,
     color: "#000",
-    fillColor: markerColor(feature.properties.sig),
-    radius: markerSize(feature.properties.mag),
+    fillColor: EarthquakemarkerColor(feature.properties.sig),
+    radius: EarthquakemarkerSize(feature.properties.mag),
     fillOpacity: 1,
     weight: 1,
     opacity: 1
@@ -92,13 +94,16 @@ function pointToLayer(feature, location) {
 
 }
    
-   
-  function addPopup(feature, layer) {
+//function to add pop up message to marker
+function addPopup(feature, layer) {
   
   // Give each feature a popup describing the place and time of the earthquake
   return layer.bindPopup(`<h4> EarthQuake: ${feature.properties.place} </h4> <hr> <h4> Time: ${Date(feature.properties.time)} </h4> <hr> <h4>Magnitude: ${feature.properties.mag} </h4> <hr> <h4>Significance: ${feature.properties.sig} </h4> `);
 }
+// Store our API endpoint as geoData
+ const geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson";
 
+// Extract earthequake data in JSON format
 d3.json(geoData, function(data) {
       
  // console.log(jsonData.features);
@@ -123,7 +128,7 @@ function createLegend(myMap){
           // creating the legend
           var legend = L.control({position: 'bottomright'});
 
-          // add legend to map
+          // creating the legend body
           legend.onAdd = function(myMap) {
             var div = L.DomUtil.create("div", "info legend");
             var magRange = [0,250,500,750,1000];
@@ -140,5 +145,6 @@ function createLegend(myMap){
             return div;
             
           }
+          //Adding legend to map
           legend.addTo(myMap);
     }
