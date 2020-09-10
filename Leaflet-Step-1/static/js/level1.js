@@ -6,7 +6,7 @@ function createMaps(earthquakeMarkers){
         
         // Create a new map
         const myMap = L.map("map", {
-          center:  [46.7557, -136.6825],
+          center:  [46.7557, -136.6825],  //Picked coordinates of San franscisco to zoom into data as per image shared
           zoom: 5        
         });
 
@@ -35,8 +35,7 @@ function createMaps(earthquakeMarkers){
 
 
 }
-// Store our API endpoint as queryUrl
- const geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson";
+
 
 
 //Function to calculate marker size based on magnitude
@@ -83,8 +82,8 @@ function pointToLayer(feature, location) {
   var options = {
     stroke: false,
     color: "#000",
-    fillColor: EarthquakemarkerColor(feature.properties.sig),
-    radius: EarthquakemarkerSize(feature.properties.mag),
+    fillColor: EarthquakemarkerColor(feature.properties.sig),  // color of marker as per significance
+    radius: EarthquakemarkerSize(feature.properties.mag), // size of marker as per Magnitude
     fillOpacity: 1,
     weight: 1,
     opacity: 1
@@ -106,8 +105,7 @@ function addPopup(feature, layer) {
 // Extract earthequake data in JSON format
 d3.json(geoData, function(data) {
       
- // console.log(jsonData.features);
-  // Using the features array sent back in the API data, create a GeoJSON layer and add it to the map
+   // Using the features array sent back in the API data, create a GeoJSON layer and add it to the map
       earthquakeMarkers = L.geoJSON(data.features, {
         
         pointToLayer: pointToLayer,
@@ -115,6 +113,7 @@ d3.json(geoData, function(data) {
         // popup for each marker
         onEachFeature:  addPopup
         });
+        
         createMaps(earthquakeMarkers);
         
 
