@@ -110,7 +110,8 @@ function selectFaultStyle(feature) {
   }
 
 // Store Fault JSON file link
-const faultURL = "static/data/qfaults_latest_quaternary.geojson";
+// const faultURL = "static/data/qfaults_latest_quaternary.geojson";
+const faultURL = "https://deepikaaa1003.github.io/leaflet-challenge/Leaflet-Step-2/static/data/qfaults_latest_quaternary.geojson";
 // Store our API endpoint as geoData
 const geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson";
 

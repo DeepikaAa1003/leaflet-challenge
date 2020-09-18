@@ -41,3 +41,51 @@ Used a second data set to plot on map to illustrate the relationship between ear
 
 * Included popups that provide additional information about the fault when a fault-line is clicked.
 
+### Visualization of app
+
+Leaflet-Step-1 folder will show following GeoMaps
+
+* Basic Earthquake Map with ToolTip
+
+![alt text][logo]
+
+[logo]: https://media.giphy.com/media/kWLh75cD0vWLvlKrG6/giphy.gif "Basic Map Detail"
+
+Leaflet-Step-2 folder will show following GeoMaps
+
+* Detailed Map with 2 layers of Map ( Light and Dark) and 2 layers of data( Earthquake and Fault Line) with tooltip. Refer GIFs below - 
+
+![alt text][logo1]
+
+[logo1]: https://media.giphy.com/media/2akRdZhhPw3SFgdeXx/giphy.gif "Advanced Map detail Dark Map EarthQuake"
+
+![alt text][logo2]
+
+[logo2]: https://media.giphy.com/media/TevpGDU8bQ4PTsXijs/giphy.gif "Advanced Map detail Dark Map Fault Line"
+
+![alt text][logo3]
+
+[logo3]: https://media.giphy.com/media/wP2PEcWkiTzkQDwzAL/giphy.gif "Advanced Map detail removing fault line layer and shifting to Light map"
+
+![alt text][logo4]
+
+[logo4]: https://media.giphy.com/media/agCQxT0Jp42xWrXivg/giphy.gif "Advanced Map detail adding fault line layer in light map"
+
+![alt text][logo5]
+
+[logo5]: https://media.giphy.com/media/ABZvamu6zAkZng4SHO/giphy.gif "Advanced Map detail Dark Map removing earthquake layer"
+
+
+![alt text][logo6]
+
+[logo6]: https://media.giphy.com/media/TAksEQnC26MqfnoLC8/giphy.gif "Advanced Map detail Shifting from Light to Dark map layer"
+
+
+
+### Steps to execute this code:
+
+Leaflet-Step-1 folder contains the code related with only earthquake layer and tooltip for earthquake layer
+Leaflet-Step-2 folder contains the code related for both earthquakes and fault-lines layers and tooltip
+Please generate a token from MapBox MapBox , and create a "config.js" file to store the "API_KEY".
+
+
